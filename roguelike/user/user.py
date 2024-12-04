@@ -1,32 +1,7 @@
 from typing import List
 
-class Coordinate:
-    def __init__(self, x, y):
-        self.x = x
-        self.y = y
-
-class Artifact:
-    def __init__(self, artifact_id: int, bonus_type: str, bonus_value: int, coordinate: Coordinate):
-        self.id = artifact_id
-        self.bonus_type = bonus_type
-        self.bonus_value = bonus_value
-        self.coordinate = coordinate
-
-class Artifact:
-    def init(self, artifact_id: int, bonus_value: int, coordinate: Coordinate):
-        self.id = artifact_id
-        self.bonus_value = bonus_value
-        self.coordinate = coordinate
-
-class Armor(Artifact):
-    def init(self, artifact_id: int, bonus_value: int, coordinate: Coordinate, defense: int):
-        super().init(artifact_id, bonus_value, coordinate)
-        self.defense = defense
-
-class Weapon(Artifact):
-    def init(self, artifact_id: int, bonus_value: int, coordinate: Coordinate, attack: int):
-        super().init(artifact_id, bonus_value, coordinate)
-        self.attack = attack
+from roguelike.common.common import Coordinate
+from roguelike.user.artifact import Artifact, Armor, Weapon
 
 
 class User:
