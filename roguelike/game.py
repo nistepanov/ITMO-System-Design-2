@@ -42,7 +42,7 @@ class Game:
 
 
     def throw_item(self):
-        self.user.throw_item(self.map)
+        self.user.throw_item()
 
     def run(self):
         self.is_running = True

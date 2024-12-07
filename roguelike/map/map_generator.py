@@ -3,7 +3,7 @@ from random import randint
 from entities.wall import Wall
 from entities.mob import Mob
 from entities.user import User
-from entities.item import Item
+from entities.item import Item, Shield, Weapon
 
 from map.map import GameMap
 
@@ -46,8 +46,10 @@ class MapGenerator:
             for rx, cell in enumerate(row):
                 if cell != ".":
                     continue
-                if randint(0, 20) == 0:
-                    self.grid[ry][rx] = 'I'
+                if randint(0, 40) == 0:
+                    self.grid[ry][rx] = 'W'
+                if randint(0, 40) == 0:
+                    self.grid[ry][rx] = 'S'
 
     def generate_random_user(self):
         x = randint(1, len(self.grid)-1)
@@ -75,8 +77,12 @@ class MapGenerator:
                     wall = Wall()
                     wall.goto(x, y)
                     walls.append((x, y))
-                elif cell == "I":
-                    item = Item()
+                elif cell == "W":
+                    item = Weapon(randint(0, 10))
+                    item.goto(x, y)
+                    items.append(item)
+                elif cell == "S":
+                    item = Shield(randint(0, 10))
                     item.goto(x, y)
                     items.append(item)
                 elif cell == "U":
