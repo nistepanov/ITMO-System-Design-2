@@ -9,4 +9,4 @@
 # file types
 *.pyc
 
-testfile.txt
+./__pycache__/.
