@@ -1,5 +1,5 @@
 import turtle
-from random import randint
+from random import choice, randint
 
 from roguelike.algorithms.simple_algo import SimpleAlgo
 from roguelike.entities.artifact import Shield, Weapon
@@ -67,9 +67,9 @@ class MapGenerator:
                 if randint(0, 20) == 0:
                     self.grid[ry][rx] = 'M'
                     is_enemies_generated = True
-        # at least one mod should be generated
+        # at least one mob should be generated
         if not is_enemies_generated:
-            self.grid[0][0] = 'M'  # improve in the future
+            self.grid[1][1] = 'M'  # improve in the future
 
     def generate_random_items(self) -> None:
         """generate_random_items logic.
@@ -88,8 +88,9 @@ class MapGenerator:
                 if randint(0, 40) == 0:
                     self.grid[ry][rx] = 'S'
                     is_item_generated = True
+        # at least one item should be generated
         if not is_item_generated:
-            self.grid[0][0] = 'W'
+            self.grid[2][2] = choice(['W', 'T'])  # improve in the future
 
     def generate_random_user(self) -> None:
         """generate_random_user logic.

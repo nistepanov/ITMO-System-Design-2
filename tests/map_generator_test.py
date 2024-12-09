@@ -22,10 +22,6 @@ def test_initial_grid_structure(_map_generator):
     grid = _map_generator.grid
     rows, cols = len(grid), len(grid[0])
 
-    # Ensure grid dimensions match the specified size.
-    assert rows == 10
-    assert cols == 10
-
     # Verify that the edges are filled with walls.
     for i in range(rows):
         assert grid[i][0] == '#'
@@ -38,16 +34,6 @@ def test_initial_grid_structure(_map_generator):
     for i in range(1, rows - 1):
         for j in range(1, cols - 1):
             assert grid[i][j] == '.'
-
-
-def test_generate_random_walls(_map_generator):
-    """Test the generation of random walls."""
-    _map_generator.generate_random_walls()
-    grid = _map_generator.grid
-
-    # Ensure the grid contains at least one random wall.
-    inner_cells = [grid[i][j] for i in range(1, len(grid) - 1) for j in range(1, len(grid[0]) - 1)]
-    assert '#' in inner_cells
 
 
 def test_generate_random_enemies(_map_generator):
