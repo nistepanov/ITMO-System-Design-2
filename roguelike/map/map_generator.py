@@ -59,12 +59,17 @@ class MapGenerator:
         Returns:
             None: Description of return value
         """
+        is_enemies_generated = False
         for ry, row in enumerate(self.grid):
             for rx, cell in enumerate(row):
                 if cell != '.':
                     continue
                 if randint(0, 20) == 0:
                     self.grid[ry][rx] = 'M'
+                    is_enemies_generated = True
+        # at least one mod should be generated
+        if not is_enemies_generated:
+            self.grid[0][0] = 'M'  # improve in the future
 
     def generate_random_items(self) -> None:
         """generate_random_items logic.
@@ -72,14 +77,19 @@ class MapGenerator:
         Returns:
             None: Description of return value
         """
+        is_item_generated = False
         for ry, row in enumerate(self.grid):
             for rx, cell in enumerate(row):
                 if cell != '.':
                     continue
                 if randint(0, 40) == 0:
                     self.grid[ry][rx] = 'W'
+                    is_item_generated = True
                 if randint(0, 40) == 0:
                     self.grid[ry][rx] = 'S'
+                    is_item_generated = True
+        if not is_item_generated:
+            self.grid[0][0] = 'W'
 
     def generate_random_user(self) -> None:
         """generate_random_user logic.
@@ -91,7 +101,7 @@ class MapGenerator:
         y = randint(1, len(self.grid[0]) - 1)
         self.grid[x][y] = 'U'
 
-    def create_map(self) -> GameMap:
+    def create_map(self, skip_generate: bool = False) -> GameMap:
         """create_map logic.
 
         Returns:
@@ -104,10 +114,11 @@ class MapGenerator:
         items: list[Weapon | Shield] = []
         mobs: list[Mob] = []
         user: User | None = None
-        self.generate_random_walls()
-        self.generate_random_enemies()
-        self.generate_random_items()
-        self.generate_random_user()
+        if not skip_generate:
+            self.generate_random_walls()
+            self.generate_random_enemies()
+            self.generate_random_items()
+            self.generate_random_user()
 
         for ry, row in enumerate(self.grid):
             for rx, cell in enumerate(row):
@@ -134,8 +145,7 @@ class MapGenerator:
                         mob.goto(x, y)
                         mobs.append(mob)
                 self.window.update()
-
         if not all([walls, items, mobs]) or user is None:
             raise MapGeneratorException
-
+        print(walls, items, mobs)
         return GameMap(walls=walls, items=items, mobs=mobs, user_=user, move_size=self.bl_size)
