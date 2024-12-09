@@ -44,5 +44,21 @@ poetry run pytest -vv --showlocals
 
 ```
 poetry install
-python3 main.py
+python3 roguelike/main.py
+```
+
+Если Вы столкнулись с ошибкой:
+```
+ModuleNotFoundError: No module named 'tkinter'
+```
+
+То необходимо в системный **python3** установить пакет `python3-tk`:  
+* Linux
+```
+   sudo apt-get install python3-tk
+```
+
+* Mac
+```
+   brew install python3-tk
 ```
