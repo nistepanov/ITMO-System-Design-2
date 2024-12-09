@@ -1,4 +1,5 @@
-
 class MobAlgorithm:
-    def __init__(self):
+    """MobAlgorithm logic."""
+
+    def __init__(self) -> None:
         pass

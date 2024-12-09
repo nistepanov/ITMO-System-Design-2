@@ -1,79 +1,123 @@
 import turtle
-from typing import List
+import typing
 
-from entities.abstract_object import AbstractObject
-from entities.item import Item, Shield, Weapon
+from roguelike.entities import abstract_object, artifact
 
 
-class User(AbstractObject):
-    
-    _health: int
-    _move_size: int
-    _damage: int
-    _speed: int
-    _active_inventory: List[Item]
-    _passive_inventory: List[Item]
+# from roguelike.map import map
 
-    def __init__(self, move_size):
+
+class User(abstract_object.AbstractObject):
+    """User logic."""
+
+    def __init__(self, move_size: int) -> None:
         super().__init__()
-        turtle.register_shape(super().get_resources_path() + "/hero.gif")
-        self.shape(super().get_resources_path() + "/hero.gif")
-        self._health = 300
-        self._move_size = move_size
-        self._damage = 10
-        self._active_inventory = []
-        self._passive_inventory = []
+        turtle.register_shape(super().get_resources_path() + '/hero.gif')
+        self.shape(super().get_resources_path() + '/hero.gif')
+        self._health: int = 300
+        self._move_size: int = move_size
+        self._damage: int = 10
+        self._active_inventory: list[artifact.Artifact] = []
+        self._passive_inventory: list[artifact.Artifact] = []
         self.experience = 0
         self.level = 1
         self.penup()
         self.speed(3)
 
     @staticmethod
-    def get_label():
-        return "P"
+    def get_label() -> str:
+        """get_label logic.
 
-    def shift_up(self, map):
+        Returns:
+            str: Description of return value
+        """
+        return 'P'
+
+    def shift_up(self, game_map: typing.Any) -> None:
+        """shift_up logic.
+
+        Args:
+            game_map (GameMap): Description of game_map.
+
+        Returns:
+            None: Description of return value
+        """
         x = self.xcor()
         y = self.ycor() + self._move_size
-        if map.check_walls(x, y):
+        if game_map.check_walls(x, y):
             self.goto(x, y)
 
-    def shift_down(self, map):
+    def shift_down(self, game_map: typing.Any) -> None:
+        """shift_down logic.
+
+        Args:
+            game_map (GameMap): Description of game_map.
+
+        Returns:
+            None: Description of return value
+        """
         x = self.xcor()
         y = self.ycor() - self._move_size
-        if map.check_walls(x, y):
+        if game_map.check_walls(x, y):
             self.goto(x, y)
 
-    def shift_left(self, map):
+    def shift_left(self, game_map: typing.Any) -> None:
+        """shift_left logic.
+
+        Args:
+            game_map (GameMap): Description of game_map.
+
+        Returns:
+            None: Description of return value
+        """
         x = self.xcor() - self._move_size
         y = self.ycor()
-        if map.check_walls(x, y):
+        if game_map.check_walls(x, y):
             self.goto(x, y)
 
-    def shift_right(self, map):
+    def shift_right(self, game_map: typing.Any) -> None:
+        """shift_right logic.
+
+        Args:
+            game_map (GameMap): Description of game_map.
+
+        Returns:
+            None: Description of return value
+        """
         x = self.xcor() + self._move_size
         y = self.ycor()
-        if map.check_walls(x, y):
+        if game_map.check_walls(x, y):
             self.goto(x, y)
 
-    def get_item(self, map):
-        for i, item in enumerate(map.items):
+    def get_item(self, game_map: typing.Any) -> None:
+        """get_item logic.
+
+        Args:
+            game_map (GameMap): Description of game_map.
+
+        Returns:
+            None: Description of return value
+        """
+        for _, item in enumerate(game_map.items):
             if item.xcor() == self.xcor() and item.ycor() == self.ycor():
                 self._active_inventory.append(item)
-                if isinstance(item, Weapon):
+                if isinstance(item, artifact.Weapon):
                     self._damage += item.bonus_value
-                elif isinstance(item, Shield):
+                elif isinstance(item, artifact.Shield):
                     self._health += item.bonus_value
                 item.hideturtle()
                 return
 
-    def throw_item(self):
+    def throw_item(self) -> None:
+        """throw_item logic.
+
+        Returns:
+            None: Description of return value
+        """
         item = self._active_inventory[0]
         self._active_inventory.remove(item)
-        if isinstance(item, Weapon):
+        if isinstance(item, artifact.Weapon):
             self._damage -= item.bonus_value
-        elif isinstance(item, Shield):
+        elif isinstance(item, artifact.Shield):
             self._health -= item.bonus_value
         self._passive_inventory.append(item)
-
-

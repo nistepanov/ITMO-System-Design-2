@@ -34,31 +34,8 @@ poetry run pytest -vv --showlocals
 
 ### Sphinx
 
-Если хотим обновить пользовательскую документацию
+Если хотим обновить пользовательскую документацию:
 
 1) Для обновления ```source``` файлов ```Sphinx``` в корне проекта запускаем:
-   ```sphinx-apidoc -f -o ./docs/source ./cli```
+   ```sphinx-apidoc -f -o ./docs/source ./roguelike```
 2) Создание новой версии ```Markdown```: ```cd docs && make markdown```
-
-## Запуск
-
-```
-poetry install
-python3 roguelike/main.py
-```
-
-Если Вы столкнулись с ошибкой:
-```
-ModuleNotFoundError: No module named 'tkinter'
-```
-
-То необходимо в системный **python3** установить пакет `python3-tk`:  
-* Linux
-```
-   sudo apt-get install python3-tk
-```
-
-* Mac
-```
-   brew install python3-tk
-```
