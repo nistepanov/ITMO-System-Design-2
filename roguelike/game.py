@@ -3,12 +3,16 @@ from queue import PriorityQueue
 from random import randint
 
 from roguelike.map import map, map_generator
+from roguelike.user_controller import UserController
 
 
 class Game:
     """Game logic."""
 
     def __init__(self) -> None:
+        self.game_width = 1500
+        self.game_height = 1200
+        turtle.setup(self.game_width, self.game_height)
         self.window = turtle.Screen()
         self.move_size = 64
         self.is_running = True
@@ -17,11 +21,12 @@ class Game:
             rows=10,
             columns=20,
             start_x=640,
-            start_y=320,
+            start_y=200,
             bl_size=self.move_size,
         ).create_map()
         self.priority_queue: PriorityQueue = PriorityQueue()
         self.user = self.map.user
+        self.user_controller = UserController(self.user, self.map, self.move_size)
 
         turtle.listen()
         turtle.onkey(self.shift_left, 'Left')
@@ -30,36 +35,42 @@ class Game:
         turtle.onkey(self.shift_up, 'Up')
         turtle.onkey(self.get_item, 'i')
         turtle.onkey(self.get_item, 'I')
-        turtle.onkey(self.throw_item, 't')
-        turtle.onkey(self.throw_item, 'T')
+        for i in range(1, 6):
+            turtle.onkey(self.activate_item(i), str(i))
+
+        turtle.onkey(self.throw_item(1), 'q')
+        turtle.onkey(self.throw_item(1), 'Q')
+        turtle.onkey(self.throw_item(2), 'w')
+        turtle.onkey(self.throw_item(2), 'W')
+        turtle.onkey(self.throw_item(3), 'e')
+        turtle.onkey(self.throw_item(3), 'E')
+
+
+    def throw_item(self, i):
+        return lambda: self.user_controller.throw_item(i - 1)
+
+    def activate_item(self, i):
+        return lambda: self.user_controller.activate_item(i - 1)
 
     def shift_up(self) -> None:
         """shift_up logic."""
-        self.user.shift_up(self.map)
+        self.user_controller.shift_up(self.map)
 
     def shift_down(self) -> None:
         """shift_down logic."""
-        self.user.shift_down(self.map)
+        self.user_controller.shift_down(self.map)
 
     def shift_left(self) -> None:
         """shift_left logic."""
-        self.user.shift_left(self.map)
+        self.user_controller.shift_left(self.map)
 
     def shift_right(self) -> None:
         """shift_right logic."""
-        self.user.shift_right(self.map)
+        self.user_controller.shift_right(self.map)
 
     def get_item(self) -> None:
         """get_item logic."""
-        self.user.get_item(self.map)
-
-    def throw_item(self) -> None:
-        """throw_item logic.
-
-        Returns:
-            None:
-        """
-        self.user.throw_item()
+        self.user_controller.get_item(self.map)
 
     def run(self) -> None:
         """Run logic.
