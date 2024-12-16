@@ -134,3 +134,25 @@ class UserController:
             self.user.hideturtle()
         self.game_map.shield_slot.write(str(self.user.health), align='center', font=self.font)
 
+    def update_xp(self, delta: int) -> None:
+        """update_health logic.
+
+        Returns:
+            None: Description of return value
+        """
+        self.user.experience += delta
+        if self.user.experience >= 5:
+            self.update_level()
+            self.user.experience = 0
+
+    def update_level(self) -> None:
+        """update_health logic.
+
+        Returns:
+            None: Description of return value
+        """
+        self.game_map.experience_slot.clear()
+        self.user.level += 1
+        self.update_health(1)
+        self.update_damage(1)
+        self.game_map.experience_slot.write(str(self.user.level), align='center', font=self.font)
