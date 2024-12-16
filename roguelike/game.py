@@ -133,6 +133,7 @@ class Game:
         self.user_controller.update_health(-mob.damage)
         if mob.health <= 0:
             mob.hideturtle()
+            self.user_controller.update_xp(5)
 
     def activate_action(self, action: Action) -> None:
         """activate_action logic."""
