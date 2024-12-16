@@ -1,10 +1,11 @@
 import turtle
 
 from roguelike.entities.abstract_object import AbstractObject
+from roguelike.entities.artifact import Artifact
 
 
 class InventorySlot(AbstractObject):
-    """Wall logic."""
+    """InventorySlot logic."""
 
     def __init__(self) -> None:
         super().__init__()
@@ -12,7 +13,7 @@ class InventorySlot(AbstractObject):
         self.shape(super().get_resources_path() + '/slot.gif')
         self.penup()
         self.level = 1
-        self.item = None
+        self.item: Artifact | None = None
 
     @staticmethod
     def get_label() -> str:

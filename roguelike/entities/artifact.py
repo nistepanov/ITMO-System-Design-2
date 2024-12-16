@@ -9,9 +9,6 @@ class Artifact(AbstractObject):
     def __init__(self, bonus_value: int) -> None:
         super().__init__()
         self.bonus_value = bonus_value
-        # self.penup()
-        # turtle.register_shape(super().get_resources_path() + "/item.gif")
-        # self.shape(super().get_resources_path() + "/item.gif")
 
     @staticmethod
     def get_label() -> str:

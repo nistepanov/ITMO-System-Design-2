@@ -1,10 +1,8 @@
-import turtle
-
 from roguelike.entities.abstract_object import AbstractObject
 
 
 class TextObject(AbstractObject):
-    """Wall logic."""
+    """Text logic."""
 
     def __init__(self) -> None:
         super().__init__()

@@ -4,9 +4,9 @@ from roguelike.entities.abstract_object import AbstractObject
 
 
 class Image(AbstractObject):
-    """Wall logic."""
+    """Image logic."""
 
-    def __init__(self, image_path) -> None:
+    def __init__(self, image_path: str) -> None:
         super().__init__()
         turtle.register_shape(super().get_resources_path() + image_path)
         self.shape(super().get_resources_path() + image_path)
@@ -21,4 +21,3 @@ class Image(AbstractObject):
             str: Description of return value
         """
         return 'W'
-

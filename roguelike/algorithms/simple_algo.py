@@ -11,14 +11,14 @@ class SimpleAlgo(mob_algorithm.MobAlgorithm):
 
     def __init__(self) -> None:
         super().__init__()
-        self.possibles_ways: list[typing.Callable[[mob.Mob, map.GameMap], None]] = [
+        self.possibles_ways: list[typing.Callable[[mob.Mob, map.GameMap], tuple[float, float] | None]] = [
             self.shift_up,
             self.shift_down,
             self.shift_left,
             self.shift_right,
         ]
 
-    def move(self, entity: mob.Mob, game_map: map.GameMap) -> None:
+    def move(self, entity: mob.Mob, game_map: map.GameMap) -> tuple[float, float] | None:
         """Move logic.
 
         Args:
@@ -29,9 +29,9 @@ class SimpleAlgo(mob_algorithm.MobAlgorithm):
             None: Description of return value
         """
         x = randint(0, 3)
-        self.possibles_ways[x](entity, game_map)
+        return self.possibles_ways[x](entity, game_map)
 
-    def shift_up(self, entity: mob.Mob, game_map: map.GameMap) -> None:
+    def shift_up(self, entity: mob.Mob, game_map: map.GameMap) -> tuple[float, float] | None:
         """shift_up logic.
 
         Args:
@@ -44,9 +44,11 @@ class SimpleAlgo(mob_algorithm.MobAlgorithm):
         x = entity.xcor()
         y = entity.ycor() + game_map.move_size
         if game_map.check_walls(x, y):
-            entity.goto(x, y)
+            return (x, y)
 
-    def shift_down(self, entity: mob.Mob, game_map: map.GameMap) -> None:
+        return None
+
+    def shift_down(self, entity: mob.Mob, game_map: map.GameMap) -> tuple[float, float] | None:
         """shift_down logic.
 
         Args:
@@ -59,9 +61,11 @@ class SimpleAlgo(mob_algorithm.MobAlgorithm):
         x = entity.xcor()
         y = entity.ycor() - game_map.move_size
         if game_map.check_walls(x, y):
-            entity.goto(x, y)
+            return (x, y)
 
-    def shift_left(self, entity: mob.Mob, game_map: map.GameMap) -> None:
+        return None
+
+    def shift_left(self, entity: mob.Mob, game_map: map.GameMap) -> tuple[float, float] | None:
         """shift_left logic.
 
         Args:
@@ -74,9 +78,11 @@ class SimpleAlgo(mob_algorithm.MobAlgorithm):
         x = entity.xcor() - game_map.move_size
         y = entity.ycor()
         if game_map.check_walls(x, y):
-            entity.goto(x, y)
+            return (x, y)
 
-    def shift_right(self, entity: mob.Mob, game_map: map.GameMap) -> None:
+        return None
+
+    def shift_right(self, entity: mob.Mob, game_map: map.GameMap) -> tuple[float, float] | None:
         """shift_right logic.
 
         Args:
@@ -89,4 +95,6 @@ class SimpleAlgo(mob_algorithm.MobAlgorithm):
         x = entity.xcor() + game_map.move_size
         y = entity.ycor()
         if game_map.check_walls(x, y):
-            entity.goto(x, y)
+            return (x, y)
+
+        return None

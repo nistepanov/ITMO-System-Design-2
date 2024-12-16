@@ -1,5 +1,4 @@
 import turtle
-import typing
 
 from roguelike.entities import abstract_object
 from roguelike.inventory.inventory import Inventory
@@ -11,7 +10,7 @@ from roguelike.inventory.inventory import Inventory
 class User(abstract_object.AbstractObject):
     """User logic."""
 
-    def __init__(self, health : int, damage : int, level : int, inventory : Inventory) -> None:
+    def __init__(self, health: int, damage: int, level: int, inventory: Inventory) -> None:
         super().__init__()
         turtle.register_shape(super().get_resources_path() + '/hero.gif')
         self.shape(super().get_resources_path() + '/hero.gif')
@@ -31,4 +30,3 @@ class User(abstract_object.AbstractObject):
             str: Description of return value
         """
         return 'P'
-
