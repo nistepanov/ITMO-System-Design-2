@@ -179,7 +179,7 @@ class MapGenerator:
         items: list[Weapon | Shield] = []
         mobs: list[Mob] = []
         user: User | None = None
-        inventory: Inventory = self.generate_inventory()
+        inventory: Inventory | None = None
 
         if not skip_generate:
             self.generate_random_walls()
@@ -187,6 +187,10 @@ class MapGenerator:
             self.generate_random_items()
             self.generate_random_user()
             self.generate_stats()
+            inventory = self.generate_inventory()
+
+        if inventory is None:
+            raise MapGeneratorException
 
         for ry, row in enumerate(self.grid):
             for rx, cell in enumerate(row):
@@ -218,7 +222,7 @@ class MapGenerator:
                         mob.goto(x, y)
                         mobs.append(mob)
                 self.window.update()
-        if not all([walls, items, mobs]) or user is None:
+        if not all([walls, items, mobs]) or user is None or inventory is None:
             raise MapGeneratorException
         return GameMap(
             walls=walls,
