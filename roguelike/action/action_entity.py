@@ -11,19 +11,26 @@ DEACTIVATE_ITEM = 4
 ACTIVATE_ITEM = 5
 GET_ITEM = 6
 
+
 class Action:
+    """Action logic."""
+
     @abstractmethod
     def __init__(self, type: int) -> None:
         self.type = type
 
+
 class MovingAction(Action):
-    def __init__(self, type: int, entity : AbstractObject) -> None:
+    """MovingAction logic."""
+
+    def __init__(self, type: int, entity: AbstractObject) -> None:
         super().__init__(type)
         self.entity = entity
 
 
 class ItemAction(Action):
-    def __init__(self, type: int, id : int) -> None:
+    """ItemAction logic."""
+
+    def __init__(self, type: int, id: int) -> None:
         super().__init__(type)
         self.id = id
-
