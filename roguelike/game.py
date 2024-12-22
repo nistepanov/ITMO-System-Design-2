@@ -5,6 +5,7 @@ from random import randint
 
 from roguelike.action.action_entity import (
     ACTIVATE_ITEM,
+    CONFUSED,
     DEACTIVATE_ITEM,
     GET_ITEM,
     SHIFT_DOWN,
@@ -13,7 +14,8 @@ from roguelike.action.action_entity import (
     SHIFT_UP,
     Action,
     ItemAction,
-    MovingAction, SpellAction, CONFUSED,
+    MovingAction,
+    SpellAction,
 )
 from roguelike.algorithms.mob_decorator_confused import ConfusedDecorator
 from roguelike.entities.mob import Mob
@@ -161,7 +163,8 @@ class Game:
         elif action.type == CONFUSED:
             self.confused_action()
 
-    def confused_action(self):
+    def confused_action(self) -> None:
+        """confused_action logic."""
         x = self.user.xcor()
         y = self.user.ycor()
         shifts = [(0, 1), (1, 0), (0, -1), (-1, 0), (-1, -1), (-1, 1), (1, -1), (1, 1), (0, 0)]
@@ -177,4 +180,3 @@ class Game:
             list[tuple[int, int]]: Description of return value
         """
         return self.map.walls
-

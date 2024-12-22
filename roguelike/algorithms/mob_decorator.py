@@ -1,6 +1,5 @@
-from abc import abstractmethod
-
 import time
+from abc import abstractmethod
 
 from roguelike.algorithms import mob_algorithm
 from roguelike.entities import mob
@@ -10,7 +9,7 @@ from roguelike.map import map
 class AbstractDecorator(mob_algorithm.MobAlgorithm):
     """AbstractDecorator logic."""
 
-    def __init__(self, confused_seconds:int, decoratee : mob_algorithm.MobAlgorithm) -> None:
+    def __init__(self, confused_seconds: int, decoratee: mob_algorithm.MobAlgorithm) -> None:
         super().__init__()
         self.start_time = time.time()
         self.confused_seconds = confused_seconds
