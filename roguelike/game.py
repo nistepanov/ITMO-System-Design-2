@@ -177,4 +177,3 @@ class Game:
             list[tuple[int, int]]: Description of return value
         """
         return self.map.walls
-
