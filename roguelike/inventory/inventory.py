@@ -103,10 +103,11 @@ class Inventory:
                 item_to_activate.teleport(active_item.xcor(), active_item.ycor())
                 return stats
 
+        item_to_deactivate = self.active_items[0].item
+
         self.move_item(slot=self.active_items[0], item=item_to_activate)
 
         # If no active slot is available, swap with the first active item.
-        item_to_deactivate = self.active_items[0].item
         if item_to_deactivate is None:
             return stats
 
@@ -141,10 +142,11 @@ class Inventory:
                 deactivate_item.teleport(slot.xcor(), slot.ycor())
                 return stats
 
+        inventory_item = self.inventory[0].item
+
         self.move_item(slot=self.inventory[0], item=deactivate_item)
 
         # If no inventory slot is available, swap with the first inventory item.
-        inventory_item = self.inventory[0].item
         if inventory_item is None:
             return stats
 
