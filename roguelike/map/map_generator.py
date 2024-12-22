@@ -1,7 +1,7 @@
 import turtle
 from random import choice, randint
 
-from roguelike.algorithms.simple_algo import SimpleAlgo
+from roguelike.algorithms.passive_algo import PassiveAlgo
 from roguelike.entities.artifact import Shield, Weapon
 from roguelike.entities.image import Image
 from roguelike.entities.inventory_slot import InventorySlot
@@ -173,7 +173,7 @@ class MapGenerator:
             GameMap: Description of return value
         """
         self.window.tracer(0)
-        simple_algo = SimpleAlgo()
+        simple_algo = PassiveAlgo()
         walls: list[tuple[int, int]] = []
         item: Weapon | Shield
         items: list[Weapon | Shield] = []

@@ -1,16 +1,18 @@
 import typing
 from random import randint
 
-from roguelike.algorithms import mob_algorithm
+import time
+
+from roguelike.algorithms import mob_decorator, mob_algorithm
 from roguelike.entities import mob
 from roguelike.map import map
 
 
-class SimpleAlgo(mob_algorithm.MobAlgorithm):
+class ConfusedDecorator(mob_decorator.AbstractDecorator):
     """SimpleAlgo logic."""
 
-    def __init__(self) -> None:
-        super().__init__()
+    def __init__(self, confused_seconds:int, decoratee : mob_algorithm.MobAlgorithm) -> None:
+        super().__init__(confused_seconds, decoratee)
         self.possibles_ways: list[typing.Callable[[mob.Mob, map.GameMap], tuple[float, float] | None]] = [
             self.shift_up,
             self.shift_down,
@@ -28,7 +30,13 @@ class SimpleAlgo(mob_algorithm.MobAlgorithm):
         Returns:
             None: Description of return value
         """
+
+        if time.time() >=  self.start_time + self.confused_seconds:
+            self.decoratee.move(entity, game_map)
+            return
+
         x = randint(0, 3)
+
         return self.possibles_ways[x](entity, game_map)
 
     def shift_up(self, entity: mob.Mob, game_map: map.GameMap) -> tuple[float, float] | None:

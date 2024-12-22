@@ -13,8 +13,9 @@ from roguelike.action.action_entity import (
     SHIFT_UP,
     Action,
     ItemAction,
-    MovingAction,
+    MovingAction, SpellAction, CONFUSED,
 )
+from roguelike.algorithms.mob_decorator_confused import ConfusedDecorator
 from roguelike.entities.mob import Mob
 from roguelike.map import map, map_generator
 from roguelike.user_controller import UserController
@@ -52,6 +53,8 @@ class Game:
         turtle.onkey(self.shift_up, 'Up')
         turtle.onkey(self.get_item, 'i')
         turtle.onkey(self.get_item, 'I')
+        turtle.onkey(self.confused, 'c')
+        turtle.onkey(self.confused, 'C')
         for i in range(1, 7):
             turtle.onkey(self.activate_item(i), str(i))
 
@@ -65,6 +68,10 @@ class Game:
     def deactivate_item(self, i: int) -> Callable[[], None]:
         """deactivate_item logic."""
         return lambda: self.priority_queue.put(ItemAction(type=DEACTIVATE_ITEM, id=i - 1))
+
+    def confused(self) -> None:
+        """deactivate_item logic."""
+        self.priority_queue.put(SpellAction(type=CONFUSED))
 
     def activate_item(self, i: int) -> Callable[[], None]:
         """activate_item logic."""
@@ -133,6 +140,7 @@ class Game:
         self.user_controller.update_health(-mob.damage)
         if mob.health <= 0:
             mob.hideturtle()
+            self.user_controller.update_xp(5)
 
     def activate_action(self, action: Action) -> None:
         """activate_action logic."""
@@ -150,6 +158,17 @@ class Game:
             self.user_controller.activate_item(action.id)
         elif action.type == GET_ITEM:
             self.user_controller.get_item()
+        elif action.type == CONFUSED:
+            self.confused_action()
+
+    def confused_action(self):
+        x = self.user.xcor()
+        y = self.user.ycor()
+        shifts = [(0, 1), (1, 0), (0, -1), (-1, 0), (-1, -1), (-1, 1), (1, -1), (1, 1), (0, 0)]
+        for mob in self.map.mobs:
+            for shift in shifts:
+                if mob.xcor() == x + shift[0] * self.move_size and mob.ycor() == y + shift[1] * self.move_size:
+                    mob.algo = ConfusedDecorator(10, mob.algo)
 
     def get_walls(self) -> list[tuple[int, int]]:
         """get_walls logic.
@@ -158,3 +177,4 @@ class Game:
             list[tuple[int, int]]: Description of return value
         """
         return self.map.walls
+

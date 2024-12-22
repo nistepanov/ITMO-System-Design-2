@@ -133,3 +133,4 @@ class UserController:
             self.user.health = 0
             self.user.hideturtle()
         self.game_map.shield_slot.write(str(self.user.health), align='center', font=self.font)
+

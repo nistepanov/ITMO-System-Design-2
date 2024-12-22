@@ -10,6 +10,7 @@ SHIFT_RIGHT = 3
 DEACTIVATE_ITEM = 4
 ACTIVATE_ITEM = 5
 GET_ITEM = 6
+CONFUSED=7
 
 
 class Action:
@@ -34,3 +35,9 @@ class ItemAction(Action):
     def __init__(self, type: int, id: int) -> None:
         super().__init__(type)
         self.id = id
+
+class SpellAction(Action):
+    """ItemAction logic."""
+
+    def __init__(self, type: int) -> None:
+        super().__init__(type)
