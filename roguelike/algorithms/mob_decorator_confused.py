@@ -1,9 +1,8 @@
+import time
 import typing
 from random import randint
 
-import time
-
-from roguelike.algorithms import mob_decorator, mob_algorithm
+from roguelike.algorithms import mob_algorithm, mob_decorator
 from roguelike.entities import mob
 from roguelike.map import map
 
@@ -11,7 +10,7 @@ from roguelike.map import map
 class ConfusedDecorator(mob_decorator.AbstractDecorator):
     """SimpleAlgo logic."""
 
-    def __init__(self, confused_seconds:int, decoratee : mob_algorithm.MobAlgorithm) -> None:
+    def __init__(self, confused_seconds: int, decoratee: mob_algorithm.MobAlgorithm) -> None:
         super().__init__(confused_seconds, decoratee)
         self.possibles_ways: list[typing.Callable[[mob.Mob, map.GameMap], tuple[float, float] | None]] = [
             self.shift_up,
@@ -30,10 +29,9 @@ class ConfusedDecorator(mob_decorator.AbstractDecorator):
         Returns:
             None: Description of return value
         """
-
-        if time.time() >=  self.start_time + self.confused_seconds:
+        if time.time() >= self.start_time + self.confused_seconds:
             self.decoratee.move(entity, game_map)
-            return
+            return None
 
         x = randint(0, 3)
 

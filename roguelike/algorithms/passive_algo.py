@@ -1,4 +1,3 @@
-
 from roguelike.algorithms import mob_algorithm
 from roguelike.entities import mob
 from roguelike.map import map
@@ -21,4 +20,3 @@ class PassiveAlgo(mob_algorithm.MobAlgorithm):
             None: Description of return value
         """
         return (entity.xcor(), entity.ycor())
-
