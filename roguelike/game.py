@@ -52,7 +52,7 @@ class Game:
         turtle.onkey(self.shift_up, 'Up')
         turtle.onkey(self.get_item, 'i')
         turtle.onkey(self.get_item, 'I')
-        for i in range(1, 6):
+        for i in range(1, 7):
             turtle.onkey(self.activate_item(i), str(i))
 
         turtle.onkey(self.deactivate_item(1), 'q')
