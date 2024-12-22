@@ -21,6 +21,7 @@ class User(abstract_object.AbstractObject):
         self.inventory = inventory
         self.penup()
         self.speed(3)
+        self.alive = True
 
     @staticmethod
     def get_label() -> str:
