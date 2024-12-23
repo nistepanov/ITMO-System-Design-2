@@ -1,6 +1,9 @@
 import turtle
 from random import choice, randint
 
+from roguelike.algorithms.agressive_algo import AgressiveAlgo
+from roguelike.algorithms.coward_algo import CowardAlgo
+from roguelike.algorithms.mob_algorithm import MobAlgorithm
 from roguelike.algorithms.passive_algo import PassiveAlgo
 from roguelike.entities.artifact import Shield, Weapon
 from roguelike.entities.image import Image
@@ -166,6 +169,15 @@ class MapGenerator:
         self.shield_slot.goto(4 * self.bl_size - self.start_x, self.stats_shift - self.bl_size / 3)
         self.shield_slot.write(MapGenerator._USER_HEALTH, align='center', font=self.data_font)
 
+    def get_mob_algorithm(self) -> MobAlgorithm:
+        """get_mob_algorithm logic.
+
+        Returns:
+            MobAlgorithm: Description of return value
+        """
+        algo_index = randint(0, 2)
+        return self.possible_algorithms[algo_index]
+
     def create_map(self, skip_generate: bool = False) -> GameMap:
         """create_map logic.
 
@@ -173,7 +185,7 @@ class MapGenerator:
             GameMap: Description of return value
         """
         self.window.tracer(0)
-        simple_algo = PassiveAlgo()
+        self.possible_algorithms = [PassiveAlgo(), CowardAlgo(), AgressiveAlgo()]
         walls: list[tuple[int, int]] = []
         item: Weapon | Shield
         items: list[Weapon | Shield] = []
@@ -218,7 +230,7 @@ class MapGenerator:
                         )
                         user.goto(x, y)
                     case 'M':
-                        mob = Mob(simple_algo)
+                        mob = Mob(self.get_mob_algorithm())
                         mob.goto(x, y)
                         mobs.append(mob)
                 self.window.update()
