@@ -12,12 +12,10 @@ from roguelike.action.action_entity import (
     SHIFT_LEFT,
     SHIFT_RIGHT,
     SHIFT_UP,
-    Action,
     ItemAction,
     MovingAction,
     SpellAction,
 )
-from roguelike.algorithms.mob_decorator_confused import ConfusedDecorator
 from roguelike.entities.mob import Mob
 from roguelike.map import map, map_generator
 from roguelike.user_controller import UserController
@@ -71,15 +69,19 @@ class Game:
 
     def deactivate_item(self, i: int) -> Callable[[], None]:
         """deactivate_item logic."""
-        return lambda: self.priority_queue.put(ItemAction(type=DEACTIVATE_ITEM, id=i - 1, user_controller=self.user_controller))
+        return lambda: self.priority_queue.put(
+            ItemAction(type=DEACTIVATE_ITEM, id=i - 1, user_controller=self.user_controller)
+        )
 
     def confused(self) -> None:
         """deactivate_item logic."""
-        self.priority_queue.put(SpellAction(type=CONFUSED, user_controller=self.user_controller))
+        self.priority_queue.put(SpellAction(type=CONFUSED, map=self.map, user=self.user, move_size=self.move_size))
 
     def activate_item(self, i: int) -> Callable[[], None]:
         """activate_item logic."""
-        return lambda: self.priority_queue.put(ItemAction(type=ACTIVATE_ITEM, id=i - 1, user_controller=self.user_controller))
+        return lambda: self.priority_queue.put(
+            ItemAction(type=ACTIVATE_ITEM, id=i - 1, user_controller=self.user_controller)
+        )
 
     def get_item(self) -> None:
         """get_item logic."""
@@ -147,7 +149,6 @@ class Game:
         if mob.health <= 0:
             mob.hideturtle()
             self.user_controller.update_xp(5)
-
 
     def get_walls(self) -> list[tuple[int, int]]:
         """get_walls logic.

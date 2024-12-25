@@ -25,7 +25,8 @@ class Action:
         self.type = type
 
     @abstractmethod
-    def run(self):
+    def run(self) -> None:
+        """Run logic."""
         raise NotImplementedError
 
 
@@ -36,8 +37,9 @@ class MovingAction(Action):
         super().__init__(type)
         self.entity = entity
         self.user_controller = user_controller
-    
-    def run(self):
+
+    def run(self) -> None:
+        """Run logic."""
         if self.type == SHIFT_UP:
             self.user_controller.shift_up()
         if self.type == SHIFT_DOWN:
@@ -56,7 +58,8 @@ class ItemAction(Action):
         self.id = id
         self.user_controller = user_controller
 
-    def run(self):
+    def run(self) -> None:
+        """Run logic."""
         if self.type == DEACTIVATE_ITEM:
             self.user_controller.deactivate_item(self.id)
         elif self.type == ACTIVATE_ITEM:
@@ -68,12 +71,14 @@ class ItemAction(Action):
 class SpellAction(Action):
     """ItemAction logic."""
 
-    def __init__(self, type: int, map: GameMap, user: User) -> None:
+    def __init__(self, type: int, map: GameMap, user: User, move_size: int) -> None:
         super().__init__(type)
         self.map = map
         self.user = user
+        self.move_size = move_size
 
-    def run(self):
+    def run(self) -> None:
+        """Run logic."""
         if self.type == CONFUSED:
             x = self.user.xcor()
             y = self.user.ycor()
