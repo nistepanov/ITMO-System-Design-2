@@ -71,35 +71,35 @@ class Game:
 
     def deactivate_item(self, i: int) -> Callable[[], None]:
         """deactivate_item logic."""
-        return lambda: self.priority_queue.put(ItemAction(type=DEACTIVATE_ITEM, id=i - 1))
+        return lambda: self.priority_queue.put(ItemAction(type=DEACTIVATE_ITEM, id=i - 1, user_controller=self.user_controller))
 
     def confused(self) -> None:
         """deactivate_item logic."""
-        self.priority_queue.put(SpellAction(type=CONFUSED))
+        self.priority_queue.put(SpellAction(type=CONFUSED, user_controller=self.user_controller))
 
     def activate_item(self, i: int) -> Callable[[], None]:
         """activate_item logic."""
-        return lambda: self.priority_queue.put(ItemAction(type=ACTIVATE_ITEM, id=i - 1))
+        return lambda: self.priority_queue.put(ItemAction(type=ACTIVATE_ITEM, id=i - 1, user_controller=self.user_controller))
 
     def get_item(self) -> None:
         """get_item logic."""
-        self.priority_queue.put(ItemAction(type=GET_ITEM, id=0))
+        self.priority_queue.put(ItemAction(type=GET_ITEM, id=0, user_controller=self.user_controller))
 
     def shift_up(self) -> None:
         """shift_up logic."""
-        self.priority_queue.put(MovingAction(type=SHIFT_UP, entity=self.user))
+        self.priority_queue.put(MovingAction(type=SHIFT_UP, entity=self.user, user_controller=self.user_controller))
 
     def shift_down(self) -> None:
         """shift_down logic."""
-        self.priority_queue.put(MovingAction(type=SHIFT_DOWN, entity=self.user))
+        self.priority_queue.put(MovingAction(type=SHIFT_DOWN, entity=self.user, user_controller=self.user_controller))
 
     def shift_left(self) -> None:
         """shift_left logic."""
-        self.priority_queue.put(MovingAction(type=SHIFT_LEFT, entity=self.user))
+        self.priority_queue.put(MovingAction(type=SHIFT_LEFT, entity=self.user, user_controller=self.user_controller))
 
     def shift_right(self) -> None:
         """shift_right logic."""
-        self.priority_queue.put(MovingAction(type=SHIFT_RIGHT, entity=self.user))
+        self.priority_queue.put(MovingAction(type=SHIFT_RIGHT, entity=self.user, user_controller=self.user_controller))
 
     def run(self) -> None:
         """Run logic.
@@ -133,7 +133,7 @@ class Game:
     def process_queue(self, has_resist: int) -> int:
         """process_queue logic."""
         while self.priority_queue.qsize() > 0 and self.user.alive:
-            self.activate_action(self.priority_queue.get())
+            self.priority_queue.get().run()
             for mob in self.map.mobs:
                 if has_resist == 0 and mob.xcor() == self.user.xcor() and mob.ycor() == self.user.ycor():
                     self.battle_with_mob(mob=mob)
@@ -148,34 +148,6 @@ class Game:
             mob.hideturtle()
             self.user_controller.update_xp(5)
 
-    def activate_action(self, action: Action) -> None:
-        """activate_action logic."""
-        if action.type == SHIFT_UP:
-            self.user_controller.shift_up()
-        elif action.type == SHIFT_DOWN:
-            self.user_controller.shift_down()
-        elif action.type == SHIFT_LEFT:
-            self.user_controller.shift_left()
-        elif action.type == SHIFT_RIGHT:
-            self.user_controller.shift_right()
-        elif action.type == DEACTIVATE_ITEM and isinstance(action, ItemAction):
-            self.user_controller.deactivate_item(action.id)
-        elif action.type == ACTIVATE_ITEM and isinstance(action, ItemAction):
-            self.user_controller.activate_item(action.id)
-        elif action.type == GET_ITEM:
-            self.user_controller.get_item()
-        elif action.type == CONFUSED:
-            self.confused_action()
-
-    def confused_action(self) -> None:
-        """confused_action logic."""
-        x = self.user.xcor()
-        y = self.user.ycor()
-        shifts = [(0, 1), (1, 0), (0, -1), (-1, 0), (-1, -1), (-1, 1), (1, -1), (1, 1), (0, 0)]
-        for mob in self.map.mobs:
-            for shift in shifts:
-                if mob.xcor() == x + shift[0] * self.move_size and mob.ycor() == y + shift[1] * self.move_size:
-                    mob.algo = ConfusedDecorator(10, mob.algo)
 
     def get_walls(self) -> list[tuple[int, int]]:
         """get_walls logic.
