@@ -26,7 +26,7 @@ class MapGenerator:
     """MapGenerator logic."""
 
     _USER_LEVEL = 1
-    _USER_HEALTH = 3
+    _USER_HEALTH = 10
     _USER_DAMAGE = 1
 
     def __init__(

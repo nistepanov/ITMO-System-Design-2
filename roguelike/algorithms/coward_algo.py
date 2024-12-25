@@ -1,6 +1,6 @@
+import typing
+
 from roguelike.algorithms import mob_algorithm
-from roguelike.entities import mob
-from roguelike.map import map
 
 
 class CowardAlgo(mob_algorithm.MobAlgorithm):
@@ -9,7 +9,7 @@ class CowardAlgo(mob_algorithm.MobAlgorithm):
     def __init__(self) -> None:
         super().__init__()
 
-    def move(self, entity: mob.Mob, game_map: map.GameMap) -> tuple[float, float] | None:
+    def move(self, entity: typing.Any, game_map: typing.Any) -> tuple[float, float] | None:
         """Move logic.
 
         Args:
