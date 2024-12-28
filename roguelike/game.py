@@ -23,7 +23,9 @@ from roguelike.map import map, map_generator
 from roguelike.user_controller import UserController
 
 
-DEFAULT_RESIST_TIME = 100
+EXIT_DELAY = 750
+
+DEFAULT_RESIST_TIME = 50
 
 
 class Game:
@@ -110,6 +112,8 @@ class Game:
         while self.is_running:
             if has_resist > 0:
                 has_resist -= 1
+            if not self.user.alive:
+                self.window.ontimer(self.window.bye, EXIT_DELAY)
             for mob in self.map.mobs:
                 if randint(0, 20) == 0:
                     moving = mob.move(self.map)
@@ -128,7 +132,7 @@ class Game:
 
     def process_queue(self, has_resist: int) -> int:
         """process_queue logic."""
-        while self.priority_queue.qsize() > 0:
+        while self.priority_queue.qsize() > 0 and self.user.alive:
             self.activate_action(self.priority_queue.get())
             for mob in self.map.mobs:
                 if has_resist == 0 and mob.xcor() == self.user.xcor() and mob.ycor() == self.user.ycor():

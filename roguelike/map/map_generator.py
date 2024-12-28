@@ -1,7 +1,6 @@
 import turtle
 from random import choice, randint
 
-from roguelike.algorithms.passive_algo import PassiveAlgo
 from roguelike.entities.artifact import Shield, Weapon
 from roguelike.entities.image import Image
 from roguelike.entities.inventory_slot import InventorySlot
@@ -11,6 +10,10 @@ from roguelike.entities.user import User
 from roguelike.entities.wall import Wall
 from roguelike.inventory.inventory import Inventory
 from roguelike.map.map import GameMap
+from roguelike.mob_factory.agressive_mobs_factory import AggressiveMobsFactory
+from roguelike.mob_factory.cowards_mobs_factory import CowardMobsFactory
+from roguelike.mob_factory.mob_factory import MobFactory
+from roguelike.mob_factory.passive_mobs_factory import PassiveMobsFactory
 
 
 class MapGeneratorException(Exception):
@@ -48,6 +51,7 @@ class MapGenerator:
         self.experience_slot: TextObject | None = None
         self.weapon_slot: TextObject | None = None
         self.shield_slot: TextObject | None = None
+        self.mob_factories: list[MobFactory] = [PassiveMobsFactory(), AggressiveMobsFactory(), CowardMobsFactory()]
 
         for i in range(rows):
             self.grid.append([])
@@ -166,6 +170,14 @@ class MapGenerator:
         self.shield_slot.goto(4 * self.bl_size - self.start_x, self.stats_shift - self.bl_size / 3)
         self.shield_slot.write(MapGenerator._USER_HEALTH, align='center', font=self.data_font)
 
+    def get_mob(self) -> Mob:
+        """get_mob logic.
+
+        Returns:
+            Mob: Description of return value
+        """
+        return self.mob_factories[randint(0, 2)].create_random_mob()
+
     def create_map(self, skip_generate: bool = False) -> GameMap:
         """create_map logic.
 
@@ -173,7 +185,6 @@ class MapGenerator:
             GameMap: Description of return value
         """
         self.window.tracer(0)
-        simple_algo = PassiveAlgo()
         walls: list[tuple[int, int]] = []
         item: Weapon | Shield
         items: list[Weapon | Shield] = []
@@ -218,7 +229,7 @@ class MapGenerator:
                         )
                         user.goto(x, y)
                     case 'M':
-                        mob = Mob(simple_algo)
+                        mob = self.get_mob()
                         mob.goto(x, y)
                         mobs.append(mob)
                 self.window.update()

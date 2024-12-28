@@ -129,10 +129,12 @@ class UserController:
         """
         self.user.health += delta
         self.game_map.shield_slot.clear()
+        self.game_map.shield_slot.write(str(self.user.health), align='center', font=self.font)
         if self.user.health <= 0:
             self.user.health = 0
             self.user.hideturtle()
-        self.game_map.shield_slot.write(str(self.user.health), align='center', font=self.font)
+            self.user.alive = False
+            self.game_map.user.write('YOU ARE DIED!', align='center', font=self.font)
 
     def update_xp(self, delta: int) -> None:
         """update_health logic.
