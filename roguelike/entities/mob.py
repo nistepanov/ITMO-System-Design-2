@@ -1,4 +1,3 @@
-import turtle
 import typing
 
 # from roguelike.algorithms import simple_algo
@@ -14,8 +13,6 @@ class Mob(abstract_object.AbstractObject):
     def __init__(self, algo: typing.Any) -> None:
         super().__init__()
         self.algo = algo
-        turtle.register_shape(super().get_resources_path() + '/simple-mob.gif')
-        self.shape(super().get_resources_path() + '/simple-mob.gif')
         self.health = 3
         self.damage = 1
         self.penup()
