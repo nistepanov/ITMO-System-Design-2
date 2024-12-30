@@ -133,7 +133,7 @@ class Game:
         self.window.bye()
 
     def process_queue(self, has_resist: int) -> int:
-        """process_queue logic."""
+        """Command queue processing."""
         while self.priority_queue.qsize() > 0 and self.user.alive:
             self.priority_queue.get().run()
             for mob in self.map.mobs:
@@ -143,7 +143,7 @@ class Game:
         return has_resist
 
     def battle_with_mob(self, mob: Mob) -> None:
-        """battle_with_mob logic."""
+        """Function with battle logic."""
         mob.health -= self.user.damage
         self.user_controller.update_health(-mob.damage)
         if mob.health <= 0:
@@ -151,7 +151,7 @@ class Game:
             self.user_controller.update_xp(5)
 
     def get_walls(self) -> list[tuple[int, int]]:
-        """get_walls logic.
+        """Walls getter.
 
         Returns:
             list[tuple[int, int]]: Description of return value

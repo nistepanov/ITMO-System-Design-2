@@ -62,7 +62,7 @@ class MapGenerator:
                     self.grid[i].append('.')
 
     def generate_random_walls(self) -> None:
-        """generate_random_walls logic.
+        """Generates walls.
 
         Returns:
             None: Description of return value
@@ -75,7 +75,7 @@ class MapGenerator:
                     self.grid[ry][rx] = '#'
 
     def generate_random_enemies(self) -> None:
-        """generate_random_enemies logic.
+        """Puts enemies into random spots.
 
         Returns:
             None: Description of return value
@@ -93,7 +93,7 @@ class MapGenerator:
             self.grid[1][1] = 'M'  # improve in the future
 
     def generate_random_items(self) -> None:
-        """generate_random_items logic.
+        """Puts items into random spots.
 
         Returns:
             None: Description of return value
@@ -114,7 +114,7 @@ class MapGenerator:
             self.grid[2][2] = choice(['W', 'T'])  # improve in the future
 
     def generate_random_user(self) -> None:
-        """generate_random_user logic.
+        """Puts user into random spot.
 
         Returns:
             None: Description of return value
@@ -151,7 +151,7 @@ class MapGenerator:
         return Inventory(inventory=inventory, active_items=active_items)
 
     def generate_stats(self) -> None:
-        """generate_stats logic."""
+        """Calculates stats of user abilities and perks."""
         level = Image('/level.gif')
         level.goto(-self.bl_size - self.start_x, self.stats_shift)
         self.experience_slot = TextObject()
@@ -171,7 +171,7 @@ class MapGenerator:
         self.shield_slot.write(MapGenerator._USER_HEALTH, align='center', font=self.data_font)
 
     def get_mob(self) -> Mob:
-        """get_mob logic.
+        """Creates new mob.
 
         Returns:
             Mob: Description of return value
@@ -179,7 +179,7 @@ class MapGenerator:
         return self.mob_factories[randint(0, 2)].create_random_mob()
 
     def create_map(self, skip_generate: bool = False) -> GameMap:
-        """create_map logic.
+        """Base function of map creation.
 
         Returns:
             GameMap: Description of return value

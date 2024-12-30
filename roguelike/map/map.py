@@ -29,7 +29,7 @@ class GameMap:
         self.shield_slot = shield_slot
 
     def check_walls(self, x: float, y: float) -> bool:
-        """check_walls logic.
+        """Checks if the coordinate is not a wall.
 
         Args:
             x (float): Coord of x.
@@ -41,7 +41,7 @@ class GameMap:
         return (x, y) not in self.walls
 
     def is_user(self, x: float, y: float) -> bool:
-        """check_user logic.
+        """Checks if there is user in given coordinates.
 
         Args:
             x (float): Coord of x.
