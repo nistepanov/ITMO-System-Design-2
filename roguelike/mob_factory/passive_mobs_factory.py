@@ -24,6 +24,7 @@ class PassiveMobsFactory(MobFactory):
         """
         mob = Skeleton(PassiveAlgo())
         mob.health = 3  # Passive skeleton has more health
+        mob.maxHealth = mob.health
         mob.damage = 1
         return mob
 
@@ -35,5 +36,6 @@ class PassiveMobsFactory(MobFactory):
         """
         mob = Dragon(PassiveAlgo())
         mob.health = 15  # Passive dragon has more health, but almost have no damage
+        mob.maxHealth = mob.health
         mob.damage = 1
         return mob

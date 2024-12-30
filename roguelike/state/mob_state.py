@@ -1,15 +1,14 @@
 import typing
-from abc import abstractmethod
 
 
-class MobAlgorithm:
-    """MobAlgorithm logic."""
+class MobState:
+    """MobState logic."""
 
     def __init__(self) -> None:
         pass
 
-    @abstractmethod
-    def move(self, entity: typing.Any, game_map: typing.Any) -> tuple[float, float] | None:
+    @staticmethod
+    def move(entity: typing.Any, game_map: typing.Any) -> tuple[float, float] | None:
         """Move logic.
 
         Args:

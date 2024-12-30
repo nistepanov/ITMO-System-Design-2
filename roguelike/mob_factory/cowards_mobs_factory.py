@@ -24,6 +24,7 @@ class CowardMobsFactory(MobFactory):
         """
         mob = Skeleton(CowardAlgo())
         mob.health = 1  # Coward skeleton has lower health
+        mob.maxHealth = mob.health
         mob.damage = 1
         mob.speed(2)
         return mob
