@@ -1,4 +1,7 @@
+import sched
+import time
 import turtle
+import typing
 from collections.abc import Callable
 from queue import Queue
 from random import randint
@@ -16,6 +19,7 @@ from roguelike.action.action_entity import (
     MovingAction,
     SpellAction,
 )
+from roguelike.entities.copy_mob import CopyMob
 from roguelike.entities.mob import Mob
 from roguelike.map import map, map_generator
 from roguelike.user_controller import UserController
@@ -111,6 +115,11 @@ class Game:
         """
         self.is_running = True
         has_resist = 0
+        s = sched.scheduler(time.time, time.sleep)
+        for mob in self.map.mobs:
+            if isinstance(mob, CopyMob):
+                s.enterabs(10, 1, self.clone(mob))
+        s.run()
         while self.is_running:
             if has_resist > 0:
                 has_resist -= 1
@@ -131,6 +140,17 @@ class Game:
             has_resist = self.process_queue(has_resist)
             self.window.update()
         self.window.bye()
+
+    def clone(self, mob: CopyMob) -> typing.Any:
+        """Clone logic.
+
+        Args:
+            mob (CopyMob): Description of mob.
+
+        Returns:
+            typing.Any: Description of return value
+        """
+        return lambda: self.map.mobs.append(mob.clone())
 
     def process_queue(self, has_resist: int) -> int:
         """Command queue processing."""
