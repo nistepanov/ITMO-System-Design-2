@@ -1,4 +1,3 @@
-import time
 import turtle
 import typing
 
@@ -18,7 +17,7 @@ class CopyMob(Mob):
         self.shape(super().get_resources_path() + '/copy.gif')
 
     def clone(self) -> typing.Any:
-        """clone logic.
+        """Clone logic.
 
         Returns:
             Mob: Description of return value
