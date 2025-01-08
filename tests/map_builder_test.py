@@ -17,8 +17,7 @@ from roguelike.map.map_builder import MapBuilder, MapBuilderException
 
 @pytest.fixture(autouse=True)
 def setup_tkinter_envs():
-    current_display = os.environ.get('DISPLAY')
-    os.environ['DISPLAY'] = f'unix{current_display}'
+    os.environ.__setitem__('DISPLAY', 'localhost:0.0')
 
 
 @pytest.fixture
