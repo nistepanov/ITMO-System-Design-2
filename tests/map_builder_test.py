@@ -1,3 +1,4 @@
+import os
 from unittest.mock import MagicMock, patch
 
 import pytest
@@ -12,6 +13,11 @@ from roguelike.entities.wall import Wall
 from roguelike.inventory.inventory import Inventory
 from roguelike.map.map import GameMap
 from roguelike.map.map_builder import MapBuilder, MapBuilderException
+
+
+@pytest.fixture(autouse=True)
+def setup_tkinter_envs():
+    os.environ.__setitem__('DISPLAY', ':0.0')
 
 
 @pytest.fixture
