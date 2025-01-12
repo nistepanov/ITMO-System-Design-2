@@ -1,10 +1,7 @@
 import typing
 
-# from roguelike.algorithms import simple_algo
 from roguelike.entities import abstract_object
-
-
-# from roguelike.map.map import GameMap
+from roguelike.state.default_state import DefaultState
 
 
 class Mob(abstract_object.AbstractObject):
@@ -14,19 +11,21 @@ class Mob(abstract_object.AbstractObject):
         super().__init__()
         self.algo = algo
         self.health = 3
+        self.maxHealth = self.health
         self.damage = 1
         self.penup()
         self.speed(3)
+        self.state = DefaultState()
 
     @staticmethod
     def get_label() -> str:
         """get_label logic."""
         return 'M'
 
-    def move(self, game_map: typing.Any) -> tuple[float, float]:
+    def move(self, game_map: typing.Any) -> tuple[float, float] | None:
         """Move logic.
 
         Args:
             game_map (GameMap): Description of game_map.
         """
-        return self.algo.move(self, game_map)
+        return self.state.move(entity=self, game_map=game_map)

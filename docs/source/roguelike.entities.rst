@@ -20,10 +20,66 @@ roguelike.entities.artifact module
    :undoc-members:
    :show-inheritance:
 
+roguelike.entities.copy\_mob module
+-----------------------------------
+
+.. automodule:: roguelike.entities.copy_mob
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+roguelike.entities.dragon module
+--------------------------------
+
+.. automodule:: roguelike.entities.dragon
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+roguelike.entities.image module
+-------------------------------
+
+.. automodule:: roguelike.entities.image
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+roguelike.entities.inventory\_slot module
+-----------------------------------------
+
+.. automodule:: roguelike.entities.inventory_slot
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 roguelike.entities.mob module
 -----------------------------
 
 .. automodule:: roguelike.entities.mob
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+roguelike.entities.simple\_mob module
+-------------------------------------
+
+.. automodule:: roguelike.entities.simple_mob
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+roguelike.entities.skeleton module
+----------------------------------
+
+.. automodule:: roguelike.entities.skeleton
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+roguelike.entities.text\_object module
+--------------------------------------
+
+.. automodule:: roguelike.entities.text_object
    :members:
    :undoc-members:
    :show-inheritance:
