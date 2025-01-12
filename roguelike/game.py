@@ -21,7 +21,7 @@ from roguelike.action.action_entity import (
 )
 from roguelike.entities.copy_mob import CopyMob
 from roguelike.entities.mob import Mob
-from roguelike.map import map, map_generator
+from roguelike.map import map, map_builder
 from roguelike.user_controller import UserController
 
 
@@ -40,14 +40,13 @@ class Game:
         self.window = turtle.Screen()
         self.move_size = 64
         self.is_running = True
-        self.map: map.GameMap = map_generator.MapGenerator(
-            window=self.window,
-            rows=10,
-            columns=20,
-            start_x=640,
-            start_y=200,
-            bl_size=self.move_size,
-        ).create_map()
+        self.map: map.GameMap = (
+            map_builder.MapBuilder(window=self.window)
+            .set_map_size(rows=10, columns=20)
+            .set_start_position(start_x=640, start_y=200)
+            .set_block_size(block_size=self.move_size)
+            .build()
+        )
         self.priority_queue: Queue = Queue()
         self.user = self.map.user
         self.user_controller = UserController(self.user, self.map, self.move_size)
