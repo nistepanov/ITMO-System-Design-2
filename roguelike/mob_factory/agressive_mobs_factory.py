@@ -1,4 +1,5 @@
 from roguelike.algorithms.agressive_algo import AgressiveAlgo
+from roguelike.entities.copy_mob import CopyMob
 from roguelike.entities.dragon import Dragon
 from roguelike.entities.simple_mob import SimpleMob
 from roguelike.entities.skeleton import Skeleton
@@ -16,6 +17,7 @@ class AggressiveMobsFactory(MobFactory):
         """
         mob = SimpleMob(AgressiveAlgo())
         mob.health = 4  # Aggressive simple mob is stronger and faster
+        mob.maxHealth = mob.health
         mob.damage = 2
         mob.speed(4)
         return mob
@@ -28,6 +30,7 @@ class AggressiveMobsFactory(MobFactory):
         """
         mob = Skeleton(AgressiveAlgo())
         mob.health = 3  # Aggressive skeleton has higher health
+        mob.maxHealth = mob.health
         mob.damage = 2
         mob.speed(3)
         return mob
@@ -40,6 +43,15 @@ class AggressiveMobsFactory(MobFactory):
         """
         mob = Dragon(AgressiveAlgo())
         mob.health = 6  # Aggressive dragon is weaker
+        mob.maxHealth = mob.health
         mob.damage = 2
         mob.speed(2)
         return mob
+
+    def create_copy_mob(self) -> CopyMob:
+        """create_copy_mob logic.
+
+        Returns:
+            CopyMob: Description of return value
+        """
+        return CopyMob(AgressiveAlgo())

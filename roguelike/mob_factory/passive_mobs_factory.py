@@ -1,4 +1,5 @@
 from roguelike.algorithms.passive_algo import PassiveAlgo
+from roguelike.entities.copy_mob import CopyMob
 from roguelike.entities.dragon import Dragon
 from roguelike.entities.simple_mob import SimpleMob
 from roguelike.entities.skeleton import Skeleton
@@ -24,6 +25,7 @@ class PassiveMobsFactory(MobFactory):
         """
         mob = Skeleton(PassiveAlgo())
         mob.health = 3  # Passive skeleton has more health
+        mob.maxHealth = mob.health
         mob.damage = 1
         return mob
 
@@ -35,5 +37,14 @@ class PassiveMobsFactory(MobFactory):
         """
         mob = Dragon(PassiveAlgo())
         mob.health = 15  # Passive dragon has more health, but almost have no damage
+        mob.maxHealth = mob.health
         mob.damage = 1
         return mob
+
+    def create_copy_mob(self) -> CopyMob:
+        """create_copy_mob logic.
+
+        Returns:
+            CopyMob: Description of return value
+        """
+        return CopyMob(PassiveAlgo())

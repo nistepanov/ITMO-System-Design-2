@@ -1,4 +1,5 @@
 from roguelike.algorithms.coward_algo import CowardAlgo
+from roguelike.entities.copy_mob import CopyMob
 from roguelike.entities.dragon import Dragon
 from roguelike.entities.simple_mob import SimpleMob
 from roguelike.entities.skeleton import Skeleton
@@ -24,6 +25,7 @@ class CowardMobsFactory(MobFactory):
         """
         mob = Skeleton(CowardAlgo())
         mob.health = 1  # Coward skeleton has lower health
+        mob.maxHealth = mob.health
         mob.damage = 1
         mob.speed(2)
         return mob
@@ -35,3 +37,11 @@ class CowardMobsFactory(MobFactory):
             Dragon: Description of return value
         """
         return Dragon(CowardAlgo())
+
+    def create_copy_mob(self) -> CopyMob:
+        """create_copy_mob logic.
+
+        Returns:
+            CopyMob: Description of return value
+        """
+        return CopyMob(CowardAlgo())

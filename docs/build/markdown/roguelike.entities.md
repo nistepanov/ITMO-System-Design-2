@@ -50,6 +50,65 @@ Weapon logic.
 
 get_label logic.
 
+## roguelike.entities.copy_mob module
+
+### *class* roguelike.entities.copy_mob.CopyMob(algo: Any)
+
+Базовые классы: [`Mob`](#roguelike.entities.mob.Mob)
+
+CopyMob mob class.
+
+#### clone() → Any
+
+Clone logic.
+
+* **Результат:**
+  Description of return value
+* **Тип результата:**
+  [Mob](#roguelike.entities.mob.Mob)
+
+## roguelike.entities.dragon module
+
+### *class* roguelike.entities.dragon.Dragon(algo: Any)
+
+Базовые классы: [`Mob`](#roguelike.entities.mob.Mob)
+
+Dragon mob class.
+
+## roguelike.entities.image module
+
+### *class* roguelike.entities.image.Image(image_path: str)
+
+Базовые классы: [`AbstractObject`](#roguelike.entities.abstract_object.AbstractObject)
+
+Image logic.
+
+#### *static* get_label() → str
+
+get_label logic.
+
+* **Результат:**
+  Description of return value
+* **Тип результата:**
+  str
+
+## roguelike.entities.inventory_slot module
+
+### *class* roguelike.entities.inventory_slot.InventorySlot
+
+Базовые классы: [`AbstractObject`](#roguelike.entities.abstract_object.AbstractObject)
+
+InventorySlot logic.
+
+#### *static* get_label() → str
+
+get_label logic.
+
+* **Результат:**
+  Description of return value
+* **Тип результата:**
+  str
+
 ## roguelike.entities.mob module
 
 ### *class* roguelike.entities.mob.Mob(algo: Any)
@@ -62,31 +121,36 @@ Mob logic.
 
 get_label logic.
 
-#### move(game_map: Any) → None
+#### move(game_map: Any) → tuple[float, float] | None
 
 Move logic.
 
 * **Параметры:**
   **game_map** ([*GameMap*](roguelike.map.md#roguelike.map.map.GameMap)) – Description of game_map.
 
-## roguelike.entities.user module
+## roguelike.entities.simple_mob module
 
-### *class* roguelike.entities.user.User(move_size: int)
+### *class* roguelike.entities.simple_mob.SimpleMob(algo: Any)
+
+Базовые классы: [`Mob`](#roguelike.entities.mob.Mob)
+
+Dragon mob class.
+
+## roguelike.entities.skeleton module
+
+### *class* roguelike.entities.skeleton.Skeleton(algo: Any)
+
+Базовые классы: [`Mob`](#roguelike.entities.mob.Mob)
+
+Skeleton mob class.
+
+## roguelike.entities.text_object module
+
+### *class* roguelike.entities.text_object.TextObject
 
 Базовые классы: [`AbstractObject`](#roguelike.entities.abstract_object.AbstractObject)
 
-User logic.
-
-#### get_item(game_map: Any) → None
-
-get_item logic.
-
-* **Параметры:**
-  **game_map** ([*GameMap*](roguelike.map.md#roguelike.map.map.GameMap)) – Description of game_map.
-* **Результат:**
-  Description of return value
-* **Тип результата:**
-  None
+Text logic.
 
 #### *static* get_label() → str
 
@@ -97,58 +161,22 @@ get_label logic.
 * **Тип результата:**
   str
 
-#### shift_down(game_map: Any) → None
+## roguelike.entities.user module
 
-shift_down logic.
+### *class* roguelike.entities.user.User(health: int, damage: int, level: int, inventory: [Inventory](roguelike.inventory.md#roguelike.inventory.inventory.Inventory))
 
-* **Параметры:**
-  **game_map** ([*GameMap*](roguelike.map.md#roguelike.map.map.GameMap)) – Description of game_map.
-* **Результат:**
-  Description of return value
-* **Тип результата:**
-  None
+Базовые классы: [`AbstractObject`](#roguelike.entities.abstract_object.AbstractObject)
 
-#### shift_left(game_map: Any) → None
+User logic.
 
-shift_left logic.
+#### *static* get_label() → str
 
-* **Параметры:**
-  **game_map** ([*GameMap*](roguelike.map.md#roguelike.map.map.GameMap)) – Description of game_map.
-* **Результат:**
-  Description of return value
-* **Тип результата:**
-  None
-
-#### shift_right(game_map: Any) → None
-
-shift_right logic.
-
-* **Параметры:**
-  **game_map** ([*GameMap*](roguelike.map.md#roguelike.map.map.GameMap)) – Description of game_map.
-* **Результат:**
-  Description of return value
-* **Тип результата:**
-  None
-
-#### shift_up(game_map: Any) → None
-
-shift_up logic.
-
-* **Параметры:**
-  **game_map** ([*GameMap*](roguelike.map.md#roguelike.map.map.GameMap)) – Description of game_map.
-* **Результат:**
-  Description of return value
-* **Тип результата:**
-  None
-
-#### throw_item() → None
-
-throw_item logic.
+get_label logic.
 
 * **Результат:**
   Description of return value
 * **Тип результата:**
-  None
+  str
 
 ## roguelike.entities.wall module
 

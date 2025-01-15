@@ -1,1 +1,4 @@
 PythonTurtle==0.3.2
+
+pytest~=8.3.4
+schedule

@@ -31,9 +31,3 @@ repos:
         entry: toml-sort --ignore-case --in-place --sort-first tool.poetry,tool.poetry.dependencies.python --sort-table-keys --sort-inline-arrays
         language: system
         files: "pyproject.toml"
-      - id: poetry-check-lock
-        name: poetry-check-lock
-        entry: poetry check --lock
-        language: system
-        pass_filenames: false
-        files: "pyproject.toml"
